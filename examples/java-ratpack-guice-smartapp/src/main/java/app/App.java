@@ -39,7 +39,7 @@ public class App {
                 .handlers(chain -> chain
                     .get(ctx -> ctx.getResponse()
                         .status(Status.FORBIDDEN)
-                        .send("This app only functions as a SmartThings Automation webhook endpoint app"))
+                        .send("The smart.octet.services app only functions as a SmartThings Automation webhook endpoint app"))
                     .post("smartapp", ctx -> {
                         ctx.parse(ExecutionRequest.class).then(executionRequest -> {
                             Request request = ctx.getRequest();
