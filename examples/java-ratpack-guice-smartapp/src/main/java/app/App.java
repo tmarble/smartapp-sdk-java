@@ -59,6 +59,7 @@ public class App {
                                     && !httpVerificationService.verify(method, request.getUri(), headersMap)) {
                                 ctx.clientError(401);
                             } else {
+                                LOG.warn("HEADERS=" + headersMap);
                                 ctx.render(json(smartApp.execute(executionRequest)));
                             }
                         });
