@@ -4,6 +4,8 @@ import static ratpack.jackson.Jackson.json;
 
 import java.util.Map;
 import java.util.stream.Collectors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,6 +25,8 @@ import ratpack.server.RatpackServer;
 
 
 public class App {
+    private static final Logger LOG = LoggerFactory.getLogger(App.class);
+
     public static void main(String... args) throws Exception {
         HttpVerificationService httpVerificationService = new HttpVerificationService();
         Module appModule = new AppModule();
@@ -37,10 +41,14 @@ public class App {
                     bindingsSpec.bindInstance(ObjectMapper.class, objectMapper);
                 }))
                 .handlers(chain -> chain
-                    .get(ctx -> ctx.getResponse()
-                        .status(Status.FORBIDDEN)
-                        .send("The smart.octet.services app only functions as a SmartThings Automation webhook endpoint app"))
+                          .get(ctx -> {
+                                  LOG.warn("GET---------------");
+                                  ctx.getResponse()
+                                      .status(Status.FORBIDDEN)
+                                      .send("The smart.octet.services app only functions as a SmartThings Automation webhook endpoint app");
+                                      })
                     .post("smartapp", ctx -> {
+                            LOG.warn("POST--------------");
                         ctx.parse(ExecutionRequest.class).then(executionRequest -> {
                             Request request = ctx.getRequest();
                             Headers headers = request.getHeaders();
