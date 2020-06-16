@@ -45,7 +45,7 @@ public class App {
                                   LOG.warn("GET---------------");
                                   ctx.getResponse()
                                       .status(Status.FORBIDDEN)
-                                      .send("The smart.octet.services app only functions as a SmartThings Automation webhook endpoint app");
+                                      .send("The smart.octet.services app only functions as a SmartThings Automation webhook endpoint");
                                       })
                     .post("smartapp", ctx -> {
                             LOG.warn("POST--------------");
