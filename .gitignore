@@ -17,6 +17,5 @@ node_modules
 /.vscode
 .gradle/
 **/out
-bin
 smartthings_rsa.pub
 examples/java-springboot-smartapp/src/main/resources/application.yml
