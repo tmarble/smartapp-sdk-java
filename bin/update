@@ -66,7 +66,9 @@ echo "export SERVER_COMMITTER=\"$user\"" >> bin/server.env
 echo "export SERVER_TIMESTAMP=\"$timestamp\"" >> bin/server.env
 
 git config pull.rebase false
-mkdir -p /var/www/.gradle
+
+# must have been done a priori
+# mkdir -p /var/www/.gradle
 
 # get the latest repo
 # do NOT pollute the outputstream
