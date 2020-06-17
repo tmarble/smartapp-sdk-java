@@ -65,10 +65,10 @@ mv bin/server.env.1 bin/server.env
 echo "export SERVER_COMMITTER=\"$user\"" >> bin/server.env
 echo "export SERVER_TIMESTAMP=\"$timestamp\"" >> bin/server.env
 
-git config pull.rebase false
+# one time setup
+# git config pull.rebase false
 
-# must have been done a priori
-# mkdir -p /var/www/.gradle
+# NOTE expect proper permissions in  /var/www/.gradle
 
 # get the latest repo
 # do NOT pollute the outputstream
