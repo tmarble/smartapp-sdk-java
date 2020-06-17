@@ -46,6 +46,7 @@ dependencies {
     implementation deps.logging.logback
     implementation deps.di.guice
     implementation ratpack.dependency('guice')
+    implementation deps.tools.httpclient
 
     testImplementation deps.groovy.all
     testImplementation deps.test.spockCore

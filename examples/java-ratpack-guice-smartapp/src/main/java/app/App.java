@@ -22,13 +22,17 @@ import ratpack.http.Headers;
 import ratpack.http.Request;
 import ratpack.http.Status;
 import ratpack.server.RatpackServer;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 
 
 public class App {
     private static final Logger LOG = LoggerFactory.getLogger(App.class);
 
     public static void main(String... args) throws Exception {
-        HttpVerificationService httpVerificationService = new HttpVerificationService();
+        // WORKS: CloseableHttpClient httpClient = null;
+        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+        HttpVerificationService httpVerificationService = new HttpVerificationService(httpClient);
         Module appModule = new AppModule();
         SmartApp smartApp = SmartApp.of(Guice.smartapp(bindings -> bindings.module(appModule)));
         RatpackServer.start(server -> {
