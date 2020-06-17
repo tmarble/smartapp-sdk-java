@@ -41,29 +41,34 @@ public class App {
                     bindingsSpec.bindInstance(ObjectMapper.class, objectMapper);
                 }))
                 .handlers(chain -> chain
+                          .all(new AppRequestLogger(LOG))
                           .get(ctx -> {
                                   LOG.warn("GET---------------");
                                   ctx.getResponse()
                                       .status(Status.FORBIDDEN)
                                       .send("The smart.octet.services app only functions as a SmartThings Automation webhook endpoint");
                                       })
-                    .post("smartapp", ctx -> {
-                            LOG.warn("POST--------------");
-                        ctx.parse(ExecutionRequest.class).then(executionRequest -> {
-                            Request request = ctx.getRequest();
-                            Headers headers = request.getHeaders();
-                            Map<String, String> headersMap = headers.getNames().stream()
-                                    .collect(Collectors.toMap(name -> name, name -> headers.get(name)));
-                            String method = request.getMethod().getName();
-                            if (executionRequest.getLifecycle() != AppLifecycle.PING
-                                    && !httpVerificationService.verify(method, request.getUri(), headersMap)) {
-                                ctx.clientError(401);
-                            } else {
-                                LOG.warn("HEADERS=" + headersMap);
-                                ctx.render(json(smartApp.execute(executionRequest)));
-                            }
-                        });
-                    })
+                          .post("smartapp", ctx -> {
+                                  LOG.warn("POST--------------");
+                                  ctx.parse(ExecutionRequest.class).then(executionRequest -> {
+                                          Request request = ctx.getRequest();
+                                          Headers headers = request.getHeaders();
+                                          Map<String, String> headersMap = headers.getNames().stream()
+                                              .collect(Collectors.toMap(name -> name, name -> headers.get(name)));
+                                          String method = request.getMethod().getName();
+                                          LOG.warn("HEADERS=" + headersMap);
+                                          LOG.warn("executionRequest=" + executionRequest);
+                                          if (executionRequest.getLifecycle() != AppLifecycle.PING
+                                              && !httpVerificationService.verify(method, request.getUri(), headersMap)) {
+
+                                              // ctx.clientError(401);
+                                              // } else {
+                                              LOG.error("MISSING authentication");
+                                          }
+                                          ctx.render(json(smartApp.execute(executionRequest)));
+                                          // }
+                                      });
+                              })
                 );
             }
         );

@@ -65,6 +65,9 @@ mv bin/server.env.1 bin/server.env
 echo "export SERVER_COMMITTER=\"$user\"" >> bin/server.env
 echo "export SERVER_TIMESTAMP=\"$timestamp\"" >> bin/server.env
 
+git config pull.rebase false
+mkdir -p $HOME/.gradle
+
 # get the latest repo
 # do NOT pollute the outputstream
 echo "-- git pull --"
