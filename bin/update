@@ -65,7 +65,7 @@ mv bin/server.env.1 bin/server.env
 echo "export SERVER_COMMITTER=\"$user\"" >> bin/server.env
 echo "export SERVER_TIMESTAMP=\"$timestamp\"" >> bin/server.env
 
-# one time setup
+# One time setup
 # git config pull.rebase false
 
 # NOTE expect proper permissions in  /var/www/.gradle
